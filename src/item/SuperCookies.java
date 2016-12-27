@@ -1,6 +1,8 @@
 package item;
 
-public class SuperCookies extends Item{
+import java.io.Serializable;
+
+public class SuperCookies extends Item implements Serializable{
 
 	public SuperCookies(String itemName) {
 		super(itemName);
