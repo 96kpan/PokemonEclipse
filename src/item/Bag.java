@@ -3,7 +3,7 @@ package item;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import model.Pokemon;
+import pokemons.Pokemon;
 
 
 public class Bag {
