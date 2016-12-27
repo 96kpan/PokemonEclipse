@@ -35,6 +35,8 @@ public abstract class Tile implements Serializable {
 	}
 	
 	public abstract void playerIsOnTile(PokemonGame game);
+	
+	public abstract String toString();
 }
 	
 
