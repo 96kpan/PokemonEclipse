@@ -30,7 +30,6 @@ public class PokemonGame {
 
 	public void launchBattle() {
 		isBattling = true; //will need to make seperate window for battles.
-		
 	}
 
 	

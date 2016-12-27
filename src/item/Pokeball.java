@@ -1,6 +1,8 @@
 package item;
 
-public class Pokeball extends Item {
+import java.io.Serializable;
+
+public class Pokeball extends Item implements Serializable{
 
 	public Pokeball(String itemName) {
 		super(itemName);

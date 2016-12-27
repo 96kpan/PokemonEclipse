@@ -12,8 +12,8 @@ import tiles.Tile;
 
 public abstract class Map implements Serializable{
 	
-	private static final int MAP_HEIGHT = 23;
-	private static final int MAP_WIDTH = 23;
+	protected static final int MAP_HEIGHT = 23;
+	protected static final int MAP_WIDTH = 23;
 	private Tile[][] map;
 	
 	private Tile bushTile;
