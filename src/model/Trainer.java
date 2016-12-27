@@ -13,18 +13,12 @@ public class Trainer {
 	private Direction myTrainerDirection;
 	
 	public Trainer() {
-		myTrainerName = null;
-		initTrainer();
-	}
-
-	private void initTrainer() {
-		
-		if(myTrainerName.equals(null)){
-			myTrainerName = "Ash Ketchum"; //if no name is set
-		}
+		myBag = new Bag();
 		myTrainerLocation = new Point(5, 10); //starter position
 		myTrainerDirection = Direction.EAST;
+		myTrainerName = "Pickles";
 	}
+
 	
 	public void setTrainerName(String name){
 		myTrainerName = name;
