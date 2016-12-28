@@ -34,6 +34,7 @@ public class Charmander extends Pokemon implements Serializable {
 			thisPic = ImageIO.read(new File("images" + File.separator + "pokemon.png"));
 		} catch (IOException e) {
 			System.out.println("Can't find image");
+			return null;
 		}
 		return thisPic.getSubimage(0, 2*32 , 32, 32);
 	}

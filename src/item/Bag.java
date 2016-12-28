@@ -9,11 +9,11 @@ import pokemons.Pokemon;
 public class Bag {
 	
 	HashMap <String, Integer> myBag;
-	ArrayList<Pokemon> pokeDex;
+	ArrayList<Pokemon> party;
 	
 	public Bag(){
 		myBag = new HashMap();
-		
+		party = new ArrayList<Pokemon>();
 		//init categories
 //		1. Pokeballs
 //		2. Cookies -> restore the pokemon's HP level by 15 HPs
@@ -36,7 +36,7 @@ public class Bag {
 	}
 	
 	public void addPokemon(Pokemon p){
-		pokeDex.add(p);
+		party.add(p);
 	}
 	
 	public HashMap getMyBag(){
@@ -44,7 +44,7 @@ public class Bag {
 	}
 	
 	public ArrayList getMyPokeDex(){
-		return this.pokeDex;
+		return this.party;
 	}
 
 }
