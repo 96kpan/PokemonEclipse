@@ -64,7 +64,6 @@ public abstract class Map implements Serializable{
 		}
 	}
 	
-
 	public void fillWithCementTile(int startRow, int endRow, int startCol, int endCol){
 		for(int i = startRow; i < endRow; i++){
 			for(int j = startCol; j < endCol; j++){
