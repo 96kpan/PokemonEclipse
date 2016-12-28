@@ -20,7 +20,7 @@ public class CementTile extends Tile implements Serializable{
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "c";
+		return " [c] ";
 	}
 
 }

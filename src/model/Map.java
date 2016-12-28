@@ -37,9 +37,9 @@ public abstract class Map implements Serializable{
 			smallTree = ImageIO.read(new File("images/smalltree.png"));
 			
 			bushTile = new BushTile(bush);
-			cementTile = new GrassTile(grass);
+			cementTile = new CementTile(grass);
 			grassTile = new GrassTile(grass);
-			smallTreeTile = new GrassTile(grass);
+			smallTreeTile = new SmallTreeTile(grass);
 			
 		} catch (IOException e) {
 			e.printStackTrace();

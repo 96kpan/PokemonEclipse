@@ -20,7 +20,7 @@ public class GrassTile extends Tile implements Serializable{
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "g";
+		return " [g] ";
 	}
 
 }
