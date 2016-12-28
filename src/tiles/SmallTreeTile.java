@@ -26,7 +26,7 @@ public class SmallTreeTile extends Tile implements Serializable{
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "t";
+		return " [t] ";
 	}
 	
 
