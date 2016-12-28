@@ -8,12 +8,6 @@ public class MapOne extends Map implements Serializable{
 		super();
 		initMap();
 	}
-	
-	public static void main(String[] args){
-		Map test = new MapOne();
-		
-		System.out.println(test.toString());
-	}
 
 	@Override
 	public void initMap() {
