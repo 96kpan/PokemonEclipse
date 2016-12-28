@@ -30,7 +30,7 @@ public class BushTile extends Tile implements Serializable{
 	}
 	
 	public String toString() {
-		return "b";
+		return " [b] ";
 	}
 	
 
