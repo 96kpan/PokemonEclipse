@@ -6,7 +6,7 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
-import model.PokemonGame;
+import model.controller;
 
 public class BushTile extends Tile implements Serializable{
 
@@ -16,7 +16,7 @@ public class BushTile extends Tile implements Serializable{
 	}
 
 	@Override
-	public void playerIsOnTile(PokemonGame game) {
+	public void playerIsOnTile(controller game) {
 		Random rand = new Random();
 		int  randomNum = rand.nextInt(100);
 		if(randomNum < 10) {

@@ -16,17 +16,17 @@ public class Pikachu extends Pokemon implements Serializable {
 	static transient BufferedImage thisPic = null; //NIVEN INSERT IMAGE HERE
 	
 	public Pikachu(){		
-		this(thisLevel, thisHealth, "Pikachu", "Electric", false, thisRunProbs, insertImage());
+		this(thisLevel, thisHealth, "Pikachu", "Electric", false, thisRunProbs, null);
 	}
 	
-	private static BufferedImage insertImage() {
-		try {
-			thisPic = ImageIO.read(new File("images" + File.separator + "pokemon.png"));
-		} catch (IOException e) {
-			System.out.println("Can't find image");
-		}
-		return thisPic.getSubimage(0, 9*32 , 32, 32);
-	}
+//	private static BufferedImage insertImage() {
+//		try {
+//			thisPic = ImageIO.read(new File("images" + File.separator + "pokemon.png"));
+//		} catch (IOException e) {
+//			System.out.println("Can't find image");
+//		}
+//		//return thisPic.getSubimage(0, 9*32 , 32, 32);
+//	}
 	
 	public String toString() {
 		return "Pikachu HP: " + this.thisHealth;
