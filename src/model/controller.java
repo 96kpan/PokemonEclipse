@@ -25,10 +25,10 @@ import pokemons.Pikachu;
 import pokemons.Pokemon;
 import pokemons.Squirtle;
 
-public class PokemonGame extends JPanel implements Serializable {
+public class controller extends JPanel implements Serializable {
 
 	public static void main(String[] args) {
-		PokemonGame gameWindow = new PokemonGame();
+		controller gameWindow = new controller();
 		JFrame window = new JFrame();
 		window.setLocation(420, 369);
 		window.setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
@@ -44,7 +44,7 @@ public class PokemonGame extends JPanel implements Serializable {
 	private MapOne map1;
 	private JPanel gameWindow;
 	private JPopupMenu pauseMenu;
-	public PokemonGame() {
+	public controller() {
 		isBattling = false;
 		isPaused = false;
 		// initialize trainer name and starter poke
