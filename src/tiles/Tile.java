@@ -3,7 +3,7 @@ package tiles;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
-import model.controller;
+import model.PokemonGame;
 
 public abstract class Tile implements Serializable {
 	private transient BufferedImage tileImage;
@@ -33,14 +33,11 @@ public abstract class Tile implements Serializable {
 		this.hasTrainer = hasHunter;
 	}
 	
-<<<<<<< HEAD
 	public BufferedImage getImage() {
 		return this.tileImage;
 	}
+	
 	public abstract void playerIsOnTile(PokemonGame game);
-=======
-	public abstract void playerIsOnTile(controller game);
->>>>>>> 07eb9c5b9905ee67a67c5cc5a242484dd5ada992
 	
 	public abstract String toString();
 	

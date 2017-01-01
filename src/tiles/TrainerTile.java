@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
 import model.PokemonGame;
+import model.PokemonGame;
 
 public class TrainerTile extends Tile implements Serializable{
 
@@ -22,5 +23,6 @@ public class TrainerTile extends Tile implements Serializable{
 	public String toString() {
 		return " [TRAINERRR] ";
 	}
+
 
 }
