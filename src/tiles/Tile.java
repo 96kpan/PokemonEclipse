@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
 import model.PokemonGame;
+import model.Trainer;
 
 public abstract class Tile implements Serializable {
 	private transient BufferedImage tileImage;
@@ -37,7 +38,7 @@ public abstract class Tile implements Serializable {
 		return this.tileImage;
 	}
 	
-	public abstract void playerIsOnTile(PokemonGame game);
+	public abstract void playerIsOnTile(Trainer trainer);
 	
 	public abstract String toString();
 	

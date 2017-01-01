@@ -22,7 +22,7 @@ public class MapOne extends Map implements Serializable{
 		fillWithSmallTreeTile(MAP_HEIGHT-1, MAP_HEIGHT, 0, MAP_WIDTH);
 		
 		//bush
-		fillWithBushTile(12, 18, 9, 14);
+		fillWithBushTile(4, 18, 4, 21);
 		
 		//cement road
 		fillWithCementTile(12, 13, 0, 2);

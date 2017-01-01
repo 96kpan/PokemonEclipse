@@ -19,9 +19,9 @@ public class Bag {
 //		2. Cookies -> restore the pokemon's HP level by 15 HPs
 //		3. SuperCookies -> restore the pokemon's HP level fully
 		
-		myBag.put("Pokeballs", 30);
-		myBag.put("Cookies", 0);
-		myBag.put("SuperCookies", 0);
+		myBag.put("Pokeball", 30);
+		myBag.put("Cookies", 5);
+		myBag.put("SuperCookies", 5);
 		
 	}
 	
@@ -45,6 +45,15 @@ public class Bag {
 	
 	public ArrayList getMyPokeDex(){
 		return this.party;
+	}
+	
+	public String toString(){
+		StringBuilder str = new StringBuilder();
+		for(String s : myBag.keySet()){
+			str.append(s + " " + myBag.get(s) + " ");
+		}
+		
+		return str.toString();
 	}
 
 }
