@@ -20,11 +20,11 @@ public class BushTile extends Tile implements Serializable{
 	@Override
 	public void playerIsOnTile(Trainer t) {
 		Random rand = new Random();
-		int  randomNum = rand.nextInt(50);
+		int  randomNum = rand.nextInt(100);
 		if(randomNum < 10) {
 			t.launchBattle();
 		}
-		else if(randomNum >= 10 && randomNum <= 15) {
+		else if(randomNum >= 10 && randomNum <= 12) {
 			t.acquireItem();
 			JOptionPane.showMessageDialog(null, "Acquiring Item: " + t.acquireItem().getName());
 		}

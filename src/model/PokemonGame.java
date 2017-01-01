@@ -58,12 +58,12 @@ public class PokemonGame extends JPanel implements Serializable {
 		trainer.getMyBag().addPokemon(setStarter());
 		// initialize game panel and pause menu within frame, init frame
 		pauseMenu = new JPopupMenu();
-		pauseMenu.add(new JMenuItem("Pokedex"));
-		pauseMenu.add(new JMenuItem("Pokemon"));
-		pauseMenu.add(new JMenuItem("Bag"));
-		pauseMenu.add(new JMenuItem("Trainer Card"));
-		pauseMenu.add(new JMenuItem("Save"));
-		pauseMenu.add(new JMenuItem("Options"));
+		pauseMenu.add(new JMenuItem(new PopUpActionListener("Pokedex")));
+		pauseMenu.add(new JMenuItem(new PopUpActionListener("Pokemon")));
+		pauseMenu.add(new JMenuItem(new PopUpActionListener("Bag")));
+		pauseMenu.add(new JMenuItem(new PopUpActionListener("Trainer Card")));
+		pauseMenu.add(new JMenuItem(new PopUpActionListener("Save")));
+		pauseMenu.add(new JMenuItem(new PopUpActionListener("Option")));
 		gameWindow = new JPanel(null);
 		gameWindow.setSize(WINDOW_SIZE, WINDOW_SIZE);
 		gameWindow.setLocation(0, 0);
@@ -75,7 +75,6 @@ public class PokemonGame extends JPanel implements Serializable {
 		this.setFocusable(true);
 		map1 = new MapOne();
 		repaint();
-		//initializeKeyBindings();
 	}
 
 	// CURRENTLY DRAWS ONE MORE COL AND ~2 MORE ROWS
@@ -103,23 +102,6 @@ public class PokemonGame extends JPanel implements Serializable {
 		return this.trainer;
 	}
 
-	private void initializeKeyBindings() {
-
-//		gameWindow.getInputMap().put(KeyStroke.getKeyStroke("ENTER"), "PAUSE");
-//		gameWindow.getActionMap().put("PAUSE", new PauseAction());
-//		gameWindow.getInputMap().put(KeyStroke.getKeyStroke("w"), "MOVEMENT_UP");
-//		gameWindow.getActionMap().put("MOVEMENT_UP", new UpAction());
-//		gameWindow.getInputMap().put(KeyStroke.getKeyStroke("a"), "MOVEMENT_LEFT");
-//		gameWindow.getActionMap().put("MOVEMENT_LEFT", new LeftAction());
-//		gameWindow.getInputMap().put(KeyStroke.getKeyStroke("s"), "MOVEMENT_DOWN");
-//		gameWindow.getActionMap().put("MOVEMENT_DOWN", new DownAction());
-//		gameWindow.getInputMap().put(KeyStroke.getKeyStroke("d"), "MOVEMENT_RIGHT");
-//		gameWindow.getActionMap().put("MOVEMENT_RIGHT", new RightAction());
-//		gameWindow.getInputMap().put(KeyStroke.getKeyStroke("j"), "A");
-//		gameWindow.getActionMap().put("A", new AButtonAction());
-//		gameWindow.getInputMap().put(KeyStroke.getKeyStroke("k"), "B");
-//		gameWindow.getActionMap().put("B", new BButtonAction());
-	}
 	/*
 	 * The following are Java actions for each of the key bindings. There should
 	 * be some design pattern that makes this easier/shorter, right? -> um
@@ -137,6 +119,7 @@ public class PokemonGame extends JPanel implements Serializable {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			int key = e.getKeyCode();
+//			System.out.println(key);
 			Point oldPoint = trainer.getTrainerLocation();
 			map1.map[oldPoint.x][oldPoint.y].setHasTrainer(false);
 			int dx = oldPoint.x;
@@ -154,6 +137,10 @@ public class PokemonGame extends JPanel implements Serializable {
 			} else if (key == 39) { //right
 				dy = 1;
 				dx = 0;
+			} 
+			
+			if(key == 10){ //enter key will toggle the menu
+				toggleMenu();
 			}
 			
 			//TODO: ADD MORE ELSE IF STATEMENTS FOR ENTER KEYS, A, B, ETC
@@ -185,84 +172,29 @@ public class PokemonGame extends JPanel implements Serializable {
 		}
 
 	}
-//
-//	class PauseAction extends AbstractAction {
-//		public PauseAction() {
-//			super("pause", null);
-//		}
-//
-//		public void actionPerformed(ActionEvent e) {
-//			toggleMenu();
-//
-//		}
-//	}
-//
-//	class UpAction extends AbstractAction {
-//		public UpAction() {
-//			super("up", null);
-//
-//		}
-//
-//		public void actionPerformed(ActionEvent e) {
-//			Point p = trainer.getTrainerLocation();
-//			System.out.println("Herere");
-//			Point newPosition = new Point(p.x, p.y);
-//			trainer.setTrainerLocation(newPosition);
-//
-//		}
-//	}
-//
-//	class DownAction extends AbstractAction {
-//		public DownAction() {
-//			super("down", null);
-//		}
-//
-//		public void actionPerformed(ActionEvent e) {
-//			// move char down
-//		}
-//	}
+	
+	private class PopUpActionListener extends AbstractAction{
+		
+		private String buttonPressed;
+		
+		public PopUpActionListener(String s){
+			this.buttonPressed = s;
+		}
 
-//	class LeftAction extends AbstractAction {
-//		public LeftAction() {
-//			super("left", null);
-//			System.out.println("Herer23213e");
-//		}
-//
-//		public void actionPerformed(ActionEvent e) {
-//			System.out.println("Hereweqre");
-//			// move char left
-//		}
-//	}
-//
-//	class RightAction extends AbstractAction {
-//		public RightAction() {
-//			super("right", null);
-//		}
-//
-//		public void actionPerformed(ActionEvent e) {
-//			// move char right
-//		}
-//	}
-//
-//	class AButtonAction extends AbstractAction {
-//		public AButtonAction() {
-//			super("a", null);
-//		}
-//
-//		public void actionPerformed(ActionEvent e) {
-//			// select
-//		}
-//	}
-//
-//	class BButtonAction extends AbstractAction {
-//		public BButtonAction() {
-//			super("b", null);
-//		}
-//
-//		public void actionPerformed(ActionEvent e) {
-//			// deselect
-//		}
-//	}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+	        //TODO: make a seperate jpanel on this?
+	    	JFrame newFrame = new JFrame();
+	    	newFrame.setLocation(450, 389);
+	    	newFrame.setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
+	    	newFrame.pack();
+	    	newFrame.setVisible(true);
+	    	
+	    	//if/else if statement for which choice
+	    	
+	    }
+		
+	}
 
 	private Pokemon setStarter() {
 		String[] starters = { "Squirtle", "Charmander", "Bulbasaur", "PEEKACHU;)" };
