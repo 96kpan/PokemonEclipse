@@ -3,7 +3,7 @@ package tiles;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
-import model.controller;
+import model.PokemonGame;
 
 public class SmallTreeTile extends Tile implements Serializable{
 	
@@ -18,7 +18,7 @@ public class SmallTreeTile extends Tile implements Serializable{
 	}
 
 	@Override
-	public void playerIsOnTile(controller game) {
+	public void playerIsOnTile(PokemonGame game) {
 		// TODO Auto-generated method stub
 		
 	}
