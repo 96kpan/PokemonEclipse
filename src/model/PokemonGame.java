@@ -1,13 +1,13 @@
 package model;
 
 import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.util.Random;
 
 import javax.swing.AbstractAction;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -37,10 +37,11 @@ public class PokemonGame extends JPanel implements Serializable {
 		window.setVisible(true);
 	}
 	private final static int WINDOW_SIZE = 368;
+	private static final int TILE_SIZE = 16;
 	private Trainer trainer;
 	private boolean isBattling;
 	private boolean isPaused;
-
+	private MapOne map1;
 	private JPanel gameWindow;
 	private JPopupMenu pauseMenu;
 	public PokemonGame() {
@@ -65,8 +66,26 @@ public class PokemonGame extends JPanel implements Serializable {
 		this.setLocation(0, 0);
 		this.add(gameWindow);
 		this.add(pauseMenu);
-
+		map1 = new MapOne();
+		repaint();
 		initializeKeyBindings();
+	}
+	
+	// CURRENTLY DRAWS ONE MORE COL AND ~2 MORE ROWS
+	// Drawing extra tiles may serve to our advantage when animating centered camera...
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+		
+		for (int x = 0; x < map1.MAP_HEIGHT; x++) {
+			for (int y = 0; y < map1.MAP_WIDTH; y++) {
+				g2.drawImage(map1.getTileAt(x, y).getImage(), y*TILE_SIZE, x*TILE_SIZE, null);
+				
+			}
+			
+		}
+		System.out.println(map1.toString());
 	}
 
 	private void initializeKeyBindings() {
