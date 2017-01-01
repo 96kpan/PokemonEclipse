@@ -59,6 +59,10 @@ public class Trainer {
 		return this.myTrainerLocation;
 	}
 	
+	public void setTrainerLocation(Point p){
+		this.myTrainerLocation = p;
+	}
+	
 	public Direction getTrainerDirection() {
 		return this.myTrainerDirection;
 	}

@@ -26,6 +26,7 @@ public abstract class Map implements Serializable{
 	private transient BufferedImage grass;
 	//private transient BufferedImage gym;
 	private transient BufferedImage smallTree;
+	private transient BufferedImage trainer;
 
 	public Map() {
 		map = new Tile[MAP_HEIGHT][MAP_WIDTH];
@@ -35,11 +36,13 @@ public abstract class Map implements Serializable{
 			grass = ImageIO.read(new File("images/grass.png"));
 			//gym = ImageIO.read(new File("images/gym.png"));
 			smallTree = ImageIO.read(new File("images/smalltree.png"));
+			trainer = ImageIO.read(new File("images/trainer.png"));
 			
 			bushTile = new BushTile(bush);
 			cementTile = new CementTile(cement);
 			grassTile = new GrassTile(grass);
 			smallTreeTile = new SmallTreeTile(smallTree);
+			
 			
 		} catch (IOException e) {
 			e.printStackTrace();
