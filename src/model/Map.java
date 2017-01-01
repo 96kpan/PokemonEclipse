@@ -37,9 +37,9 @@ public abstract class Map implements Serializable{
 			smallTree = ImageIO.read(new File("images/smalltree.png"));
 			
 			bushTile = new BushTile(bush);
-			cementTile = new CementTile(grass);
+			cementTile = new CementTile(cement);
 			grassTile = new GrassTile(grass);
-			smallTreeTile = new SmallTreeTile(grass);
+			smallTreeTile = new SmallTreeTile(smallTree);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -54,8 +54,7 @@ public abstract class Map implements Serializable{
 				map[i][j] = grassTile;
 			}
 		}
-	}
-	
+	} 
 	public void fillWithBushTile(int startRow, int endRow, int startCol, int endCol){
 		for(int i = startRow; i < endRow; i++){
 			for(int j = startCol; j < endCol; j++){
@@ -88,8 +87,8 @@ public abstract class Map implements Serializable{
 		}
 	}
 	
-	public String getTileAt(int row, int col){
-		return map[row][col].toString();
+	public Tile getTileAt(int row, int col){
+		return map[row][col];
 	}
 	
 	public String toString(){

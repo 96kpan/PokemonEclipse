@@ -11,6 +11,7 @@ public class MapOne extends Map implements Serializable{
 
 	@Override
 	public void initMap() {
+		
 		//all grass
 		setAllToEmpty();
 		
@@ -29,6 +30,11 @@ public class MapOne extends Map implements Serializable{
 		fillWithCementTile(10, 11, 2, 10);
 		fillWithCementTile(10, 13, 10, 11);
 		fillWithCementTile(13, 14, 10, MAP_WIDTH);
+		/* test to see width/height of actual map on GUI
+		setAllToEmpty();
+		fillWithSmallTreeTile(0, MAP_HEIGHT, 0, 1);
+		fillWithSmallTreeTile(0, 1, 0, MAP_WIDTH);
+		*/
 	}
 
 	

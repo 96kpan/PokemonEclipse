@@ -6,13 +6,12 @@ import java.io.Serializable;
 import model.PokemonGame;
 
 public abstract class Tile implements Serializable {
-	//private transient BufferedImage tileImage;
+	private transient BufferedImage tileImage;
 	private boolean hasTrainer;
 	private boolean hasPokemon;
 	protected boolean canMove;
-	
 	public Tile(BufferedImage tileImage) {
-		//this.tileImage = null;
+		this.tileImage = tileImage;
 		this.hasTrainer = false;
 		this.hasPokemon = false;
 		canMove = true;
@@ -34,9 +33,13 @@ public abstract class Tile implements Serializable {
 		this.hasTrainer = hasHunter;
 	}
 	
+	public BufferedImage getImage() {
+		return this.tileImage;
+	}
 	public abstract void playerIsOnTile(PokemonGame game);
 	
 	public abstract String toString();
+	
 }
 	
 
