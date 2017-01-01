@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -15,33 +16,63 @@ import tiles.CementTile;
 import tiles.GrassTile;
 import tiles.SmallTreeTile;
 import tiles.Tile;
-import tiles.TrainerTile;
 
 public class Trainer {
 	
 	private Bag myBag;
+	private static Trainer instance;
 	private String myTrainerName;
-	private Point myTrainerLocation;
+	private static Point myTrainerLocation;
 	private Direction myTrainerDirection;
-	private Tile trainerTile;
 	private transient BufferedImage trainer;
+	private boolean isBattling;
 	
 	public Trainer() {
 		myBag = new Bag();
-		myTrainerLocation = new Point(7, 10); //starter position
+		isBattling = false;
+		myTrainerLocation = new Point(12, 0); //starter position
 		myTrainerDirection = Direction.EAST;
 		myTrainerName = "Pickles";
 		
 		try {
 			trainer = ImageIO.read(new File("images/trainer.png"));
 			
-			trainerTile = new TrainerTile(trainer);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+	
 
+	public Item acquireItem() {
+		Random rand = new Random();
+		int randomNum = rand.nextInt(100) + 1;
+		
+		Item temp = null;
+		
+		if (randomNum < 25) {
+			temp = new Cookies("Cookies");
+		} else if (randomNum < 35) {
+			temp = new SuperCookies("SuperCookies");
+		} else {
+			temp = new Pokeball("Pokeball");
+		}
+		
+		this.myBag.addItemToBag(temp.getName()); 
+		return temp;
+	}
+	
+	public void launchBattle() {
+		isBattling = true; // will need to make separate window for battles.
+	}
+	
+	public static synchronized Trainer getInstance()
+	{
+		if (instance == null)
+			instance = new Trainer();
+
+		return instance;
+	}
 	
 	public void setTrainerName(String name){
 		myTrainerName = name;
@@ -67,9 +98,7 @@ public class Trainer {
 		return this.myTrainerDirection;
 	}
 
-
 	public Image getImage() {
-		// TODO Auto-generated method stub
 		return trainer;
 	}
 
