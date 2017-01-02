@@ -10,10 +10,12 @@ public class Bag {
 	
 	HashMap <String, Integer> myBag;
 	ArrayList<Pokemon> party;
+	ArrayList<Pokemon> pokedex;
 	
 	public Bag(){
 		myBag = new HashMap();
 		party = new ArrayList<Pokemon>();
+		pokedex = new ArrayList<Pokemon>();
 		//init categories
 //		1. Pokeballs
 //		2. Cookies -> restore the pokemon's HP level by 15 HPs
@@ -36,7 +38,12 @@ public class Bag {
 	}
 	
 	public void addPokemon(Pokemon p){
-		party.add(p);
+	
+		if(pokedex.size() <= 6){
+			party.add(p); //adds to both if user hasn't reached 6 pokemons
+		} 
+		pokedex.add(p); //but the minute a user hits 6 pokemons, then we only add to the pokedex
+		
 	}
 	
 	public HashMap getMyBag(){
@@ -47,11 +54,35 @@ public class Bag {
 		return this.party;
 	}
 	
-	public String toString(){
+	public String toStringBag(){
 		StringBuilder str = new StringBuilder();
+		str.append("<html>");
 		for(String s : myBag.keySet()){
-			str.append(s + " " + myBag.get(s) + " ");
+			str.append(s + " " + myBag.get(s) + " </br>");
 		}
+		str.append("</html>");
+		
+		return str.toString();
+	}
+	
+	public String toStringParty(){
+		StringBuilder str = new StringBuilder();
+		str.append("<html>");
+		for(int i = 0; i < party.size(); i++){
+			str.append(party.get(i) + " </br>");
+		}
+		str.append("</html>");
+		
+		return str.toString();
+	}
+	
+	public String toStringPokedex(){
+		StringBuilder str = new StringBuilder();
+		str.append("<html>");
+		for(int i = 0; i < this.pokedex.size(); i++){
+			str.append(pokedex.get(i) + " </br>");
+		}
+		str.append("</html>");
 		
 		return str.toString();
 	}
