@@ -12,12 +12,14 @@ import java.io.Serializable;
 import java.util.Random;
 
 import javax.swing.AbstractAction;
+import javax.swing.AbstractButton;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
+import javax.swing.MenuElement;
 
 import item.Cookies;
 import item.Item;
@@ -58,23 +60,34 @@ public class PokemonGame extends JPanel implements Serializable {
 		trainer.getMyBag().addPokemon(setStarter());
 		// initialize game panel and pause menu within frame, init frame
 		pauseMenu = new JPopupMenu();
-		pauseMenu.add(new JMenuItem(new PopUpActionListener("Pokedex")));
-		pauseMenu.add(new JMenuItem(new PopUpActionListener("Pokemon")));
-		pauseMenu.add(new JMenuItem(new PopUpActionListener("Bag")));
-		pauseMenu.add(new JMenuItem(new PopUpActionListener("Trainer Card")));
-		pauseMenu.add(new JMenuItem(new PopUpActionListener("Save")));
-		pauseMenu.add(new JMenuItem(new PopUpActionListener("Option")));
+		initializePauseMenu();
 		gameWindow = new JPanel(null);
 		gameWindow.setSize(WINDOW_SIZE, WINDOW_SIZE);
 		gameWindow.setLocation(0, 0);
 		this.setSize(WINDOW_SIZE, WINDOW_SIZE);
-		this.setLocation(0, 0);
+		this.setLocation(0, 0); 
 		this.add(gameWindow);
 		this.add(pauseMenu);
 		this.addKeyListener(new KeyboardListener());
 		this.setFocusable(true);
 		map1 = new MapOne();
 		repaint();
+	}
+
+	private void initializePauseMenu() {
+		pauseMenu.add(new JMenuItem(new PopUpActionListener("Pokedex")));
+		pauseMenu.add(new JMenuItem(new PopUpActionListener("Pokemon")));
+		pauseMenu.add(new JMenuItem(new PopUpActionListener("Bag")));
+		pauseMenu.add(new JMenuItem(new PopUpActionListener("Trainer Card")));
+		pauseMenu.add(new JMenuItem(new PopUpActionListener("Save")));
+		pauseMenu.add(new JMenuItem(new PopUpActionListener("Option")));
+		MenuElement[] pMenuItems = pauseMenu.getSubElements();
+		((JMenuItem) pMenuItems[0]).setText("Pokedex");
+		((JMenuItem) pMenuItems[1]).setText("Pokemon");
+		((JMenuItem) pMenuItems[2]).setText("Bag");
+		((JMenuItem) pMenuItems[3]).setText("Trainer Card");
+		((JMenuItem) pMenuItems[4]).setText("Save");
+		((JMenuItem) pMenuItems[5]).setText("Option");
 	}
 
 	// CURRENTLY DRAWS ONE MORE COL AND ~2 MORE ROWS
@@ -184,11 +197,10 @@ public class PokemonGame extends JPanel implements Serializable {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 	        //TODO: make a seperate jpanel on this?
-	    	JFrame newFrame = new JFrame();
-	    	newFrame.setLocation(450, 389);
-	    	newFrame.setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
-	    	newFrame.pack();
-	    	newFrame.setVisible(true);
+	    	JPanel newPanel = new JPanel();
+	    	newPanel.setLocation(450, 389);
+	    	newPanel.setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
+	    	newPanel.setVisible(true);
 	    	
 	    	//if/else if statement for which choice
 	    	
