@@ -1,30 +1,23 @@
 package model;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.Serializable;
-import java.util.Random;
-
 import javax.swing.AbstractAction;
-import javax.swing.AbstractButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.KeyStroke;
 import javax.swing.MenuElement;
-
-import item.Cookies;
-import item.Item;
-import item.Pokeball;
-import item.SuperCookies;
 import pokemons.Bulbasaur;
 import pokemons.Charmander;
 import pokemons.Pikachu;
@@ -38,6 +31,7 @@ public class PokemonGame extends JPanel implements Serializable {
 		JFrame window = new JFrame();
 		window.setLocation(420, 369);
 		window.setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
+		window.setDefaultCloseOperation(window.EXIT_ON_CLOSE);
 		window.add(gameWindow);
 		window.pack();
 		window.setVisible(true);
@@ -52,7 +46,7 @@ public class PokemonGame extends JPanel implements Serializable {
 	private JPopupMenu pauseMenu;
 
 	public PokemonGame() {
-		
+
 		isPaused = false;
 		// initialize trainer name and starter poke
 		trainer = new Trainer();
@@ -65,7 +59,7 @@ public class PokemonGame extends JPanel implements Serializable {
 		gameWindow.setSize(WINDOW_SIZE, WINDOW_SIZE);
 		gameWindow.setLocation(0, 0);
 		this.setSize(WINDOW_SIZE, WINDOW_SIZE);
-		this.setLocation(0, 0); 
+		this.setLocation(0, 0);
 		this.add(gameWindow);
 		this.add(pauseMenu);
 		this.addKeyListener(new KeyboardListener());
@@ -100,18 +94,18 @@ public class PokemonGame extends JPanel implements Serializable {
 
 		for (int x = 0; x < map1.MAP_HEIGHT; x++) {
 			for (int y = 0; y < map1.MAP_WIDTH; y++) {
-				
+
 				g2.drawImage(map1.getTileAt(x, y).getImage(), y * TILE_SIZE, x * TILE_SIZE, null);
-				
+
 			}
 		}
 		g2.drawImage(this.trainer.getImage(), trainer.getTrainerLocation().y * TILE_SIZE,
 				trainer.getTrainerLocation().x * TILE_SIZE, null);
 		// add trainer image here:
-		//System.out.println(map1.toString());
+		System.out.println(map1.toString());
 	}
-	
-	public Trainer getTrainer(){
+
+	public Trainer getTrainer() {
 		return this.trainer;
 	}
 
@@ -132,48 +126,47 @@ public class PokemonGame extends JPanel implements Serializable {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			int key = e.getKeyCode();
-//			System.out.println(key);
+			// System.out.println(key);
 			Point oldPoint = trainer.getTrainerLocation();
 			map1.map[oldPoint.x][oldPoint.y].setHasTrainer(false);
 			int dx = oldPoint.x;
 			int dy = oldPoint.y;
-			
-			if (key == 38) { //up
+
+			if (key == 38) { // up
 				dx = -1;
 				dy = 0;
-			} else if (key == 40) { //down
+			} else if (key == 40) { // down
 				dx = 1;
 				dy = 0;
-			} else if (key == 37) { //left
+			} else if (key == 37) { // left
 				dy = -1;
 				dx = 0;
-			} else if (key == 39) { //right
+			} else if (key == 39) { // right
 				dy = 1;
 				dx = 0;
-			} 
-			
-			if(key == 10){ //enter key will toggle the menu
+			}
+
+			if (key == 10) { // enter key will toggle the menu
 				toggleMenu();
 			}
-			
-			//TODO: ADD MORE ELSE IF STATEMENTS FOR ENTER KEYS, A, B, ETC
 
-			if(inBounds(oldPoint.x + dx, oldPoint.y + dy) && map1.map[oldPoint.x + dx][oldPoint.y + dy].canMove()){
+			// TODO: ADD MORE ELSE IF STATEMENTS FOR ENTER KEYS, A, B, ETC
+
+			if (inBounds(oldPoint.x + dx, oldPoint.y + dy) && map1.map[oldPoint.x + dx][oldPoint.y + dy].canMove()) {
 				trainer.setTrainerLocation(new Point(oldPoint.x + dx, oldPoint.y + dy));
 				map1.map[oldPoint.x + dx][oldPoint.y + dy].setHasTrainer(true);
 				map1.map[oldPoint.x + dx][oldPoint.y + dy].playerIsOnTile(trainer);
-			}
-			else{
+			} else {
 				trainer.setTrainerLocation(oldPoint);
 				map1.map[oldPoint.x][oldPoint.y].setHasTrainer(true);
 			}
-			
+
 			repaint();
 
 		}
 
 		private boolean inBounds(int x, int y) {
-			if(x > 0 && x < map1.MAP_WIDTH && y > 0 && y < Map.MAP_HEIGHT){
+			if (x > 0 && x < map1.MAP_WIDTH && y > 0 && y < Map.MAP_HEIGHT) {
 				return true;
 			}
 			return false;
@@ -185,27 +178,51 @@ public class PokemonGame extends JPanel implements Serializable {
 		}
 
 	}
-	
-	private class PopUpActionListener extends AbstractAction{
-		
+
+	private class PopUpActionListener extends AbstractAction {
+
 		private String buttonPressed;
-		
-		public PopUpActionListener(String s){
+		private JFrame newFrame;
+
+		public PopUpActionListener(String s) {
 			this.buttonPressed = s;
+			newFrame = new JFrame();
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-	        //TODO: make a seperate jpanel on this?
-	    	JPanel newPanel = new JPanel();
-	    	newPanel.setLocation(450, 389);
-	    	newPanel.setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
-	    	newPanel.setVisible(true);
-	    	
-	    	//if/else if statement for which choice
-	    	
-	    }
-		
+
+			newFrame.setLocation(450, 389);
+			newFrame.setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
+			newFrame.pack();
+			JPanel newPanel = new JPanel(null);
+			newPanel.setLocation(0, 0);
+			newPanel.setSize(WINDOW_SIZE-69, WINDOW_SIZE-69);
+			newPanel.setBackground(Color.white);
+
+			JLabel jta = new JLabel("");
+			jta.setSize(WINDOW_SIZE, WINDOW_SIZE);
+			jta.setFont(new Font("Courier", Font.BOLD, 30));
+
+			// if/else if statement for which choice
+			if (buttonPressed.equals("Pokedex")) { //all of your pokemons
+				jta.setText(trainer.getMyBag().toStringPokedex());
+			} else if (buttonPressed.equals("Pokemon")) { //your six pokemons
+				jta.setText(trainer.getMyBag().toStringParty());
+			} else if (buttonPressed.equals("Bag")) {
+				jta.setText(trainer.getMyBag().toStringBag());
+			} else if (buttonPressed.equals("Trainer Card")) {
+
+			} else if (buttonPressed.equals("Save")) {
+
+			} else if (buttonPressed.equals("Option")) {
+
+			}
+
+			newPanel.add(jta);
+			newFrame.add(newPanel);
+			newFrame.setVisible(true);
+		}
 	}
 
 	private Pokemon setStarter() {
@@ -213,7 +230,7 @@ public class PokemonGame extends JPanel implements Serializable {
 		Pokemon starter = null;
 		int starterPokeNum = JOptionPane.showOptionDialog(null,
 				"I found some Pokemon and I'd like to share. Choose one! Go ahead!", "Choose your starter",
-				JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, starters, starters[0]);
+				JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, starters, starters[1]);
 		switch (starterPokeNum) {
 		case 0:
 			starter = new Squirtle();
