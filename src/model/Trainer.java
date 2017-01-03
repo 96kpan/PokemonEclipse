@@ -62,6 +62,10 @@ public class Trainer {
 		return temp;
 	}
 	
+	public void acquireItem(Item i) {	
+		this.myBag.addItemToBag(i.getName()); 
+	}
+	
 	public void launchBattle() {
 		isBattling = true; // will need to make separate window for battles.
 	}

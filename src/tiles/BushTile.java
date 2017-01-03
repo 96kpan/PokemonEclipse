@@ -22,7 +22,7 @@ public class BushTile extends Tile implements Serializable{
 		Random rand = new Random();
 		int  randomNum = rand.nextInt(100);
 		if(randomNum < 10) {
-			t.launchBattle();
+			//t.launchBattle();
 		}
 		else if(randomNum >= 10 && randomNum <= 12) {
 			t.acquireItem();
