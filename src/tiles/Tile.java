@@ -3,6 +3,7 @@ package tiles;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
+import item.Item;
 import model.PokemonGame;
 import model.Trainer;
 
@@ -41,6 +42,14 @@ public abstract class Tile implements Serializable {
 	public abstract void playerIsOnTile(Trainer trainer);
 	
 	public abstract String toString();
+
+	public boolean hasItem() {
+		return false;
+	}
+	
+	public Item getItem() {
+		return null;
+	}
 	
 }
 	

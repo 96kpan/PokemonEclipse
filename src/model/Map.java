@@ -7,6 +7,8 @@ import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 
+import item.Item;
+import item.Pokeball;
 import tiles.*;
 import tiles.Tile;
 
@@ -22,6 +24,9 @@ public abstract class Map implements Serializable {
 	private Tile grassTile;
 	private Tile smallTreeTile;
 	private Tile trainerTile;
+	private Tile pokeballTile;
+	private Tile cookieTile;
+	private Tile superCookieTile;
 
 	private transient BufferedImage bush;
 	private transient BufferedImage cement;
@@ -29,6 +34,9 @@ public abstract class Map implements Serializable {
 	// private transient BufferedImage gym;
 	private transient BufferedImage smallTree;
 	private transient BufferedImage trainerImage;
+	private transient BufferedImage pokeballImage;
+	private transient BufferedImage cookieImage;
+	private transient BufferedImage superCookieImage;
 
 	public Map() {
 		map = new Tile[MAP_HEIGHT][MAP_WIDTH];
@@ -41,11 +49,17 @@ public abstract class Map implements Serializable {
 			// gym = ImageIO.read(new File("images/gym.png"));
 			smallTree = ImageIO.read(new File("images/smalltree.png"));
 			trainerImage = ImageIO.read(new File("images/trainer.png"));
+			pokeballImage = ImageIO.read(new File("images/pokeball.png"));
+			cookieImage = ImageIO.read(new File("images/cookies.png"));
+			superCookieImage = ImageIO.read(new File("images/supercookies.png"));
 
 			bushTile = new BushTile(bush);
 			cementTile = new CementTile(cement);
 			grassTile = new GrassTile(grass);
 			smallTreeTile = new SmallTreeTile(smallTree);
+			pokeballTile = new ItemTile(pokeballImage, new Pokeball("Pokeball"));
+			cookieTile = new ItemTile(cookieImage, new Pokeball("Cookies"));
+			superCookieTile = new ItemTile(superCookieImage, new Pokeball("SuperCookies"));
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -53,6 +67,16 @@ public abstract class Map implements Serializable {
 	}
 
 	public abstract void initMap();
+	
+	public void addItems(Item i, int r, int c){
+		if(i.getName().equals("Pokeball")){
+			map[r][c] = pokeballTile;
+		} else if(i.getName().equals("Cookies")){
+			map[r][c] = cookieTile;
+		} else if(i.getName().equals("SuperCookies")){
+			map[r][c] = superCookieTile;
+		}
+	}
 
 	protected void setAllToEmpty() {
 		for (int i = 0; i < map.length; i++) {

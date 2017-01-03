@@ -42,7 +42,7 @@ public class PokemonGame extends JPanel implements Serializable {
 		gameCardPanel.setFocusable(true);
 		window.pack();
 		window.setVisible(true);
-		
+
 	}
 
 	private final static int WINDOW_SIZE = 384;
@@ -52,7 +52,8 @@ public class PokemonGame extends JPanel implements Serializable {
 	private MapOne map1;
 	private JPopupMenu pauseMenu;
 	private JPanel menuFrame;
-	private static JPanel gameCardPanel; //doesn't need to be serialized. 
+	private static JPanel gameCardPanel; // doesn't need to be serialized.
+
 	public PokemonGame() {
 
 		isPaused = false;
@@ -65,12 +66,12 @@ public class PokemonGame extends JPanel implements Serializable {
 		initializePauseMenu();
 		this.setSize(WINDOW_SIZE, WINDOW_SIZE);
 		this.setLocation(0, 0);
-//		this.addKeyListener(new KeyboardListener());
-//		this.setFocusable(true);
+		// this.addKeyListener(new KeyboardListener());
+		// this.setFocusable(true);
 		this.add(pauseMenu);
 		map1 = new MapOne();
 		repaint();
-		
+
 	}
 
 	private void initializePauseMenu() {
@@ -140,13 +141,13 @@ public class PokemonGame extends JPanel implements Serializable {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			int key = e.getKeyCode();
-			// System.out.println(key);
+			System.out.println(key);
 			if (!isPaused) {
 				Point oldPoint = trainer.getTrainerLocation();
 				map1.map[oldPoint.x][oldPoint.y].setHasTrainer(false);
 				int dx = oldPoint.x;
 				int dy = oldPoint.y;
-	
+
 				if (key == 38) { // up
 					dx = -1;
 					dy = 0;
@@ -160,14 +161,15 @@ public class PokemonGame extends JPanel implements Serializable {
 					dy = 1;
 					dx = 0;
 				}
-	
+
 				if (key == 10) { // enter key will toggle the menu
 					toggleMenu();
 				}
-	
+
 				// TODO: ADD MORE ELSE IF STATEMENTS FOR ENTER KEYS, A, B, ETC
-	
-				if (inBounds(oldPoint.x + dx, oldPoint.y + dy) && map1.map[oldPoint.x + dx][oldPoint.y + dy].canMove()) {
+
+				if (inBounds(oldPoint.x + dx, oldPoint.y + dy)
+						&& map1.map[oldPoint.x + dx][oldPoint.y + dy].canMove()) {
 					trainer.setTrainerLocation(new Point(oldPoint.x + dx, oldPoint.y + dy));
 					map1.map[oldPoint.x + dx][oldPoint.y + dy].setHasTrainer(true);
 					map1.map[oldPoint.x + dx][oldPoint.y + dy].playerIsOnTile(trainer);
@@ -178,13 +180,32 @@ public class PokemonGame extends JPanel implements Serializable {
 					trainer.setTrainerLocation(oldPoint);
 					map1.map[oldPoint.x][oldPoint.y].setHasTrainer(true);
 				}
-			} else {
-				if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_B) { // enter key will toggle the menu
-					((CardLayout) gameCardPanel.getLayout()).show(gameCardPanel, "g");
-					gameCardPanel.remove(1); // removes the previous menu card
-					isPaused = false;
-				}
 			}
+
+			else if (key == 65) { //A button
+				// picks up item if neccessary
+				if (map1.map[trainer.getTrainerLocation().y][trainer.getTrainerLocation().x].hasItem()) {
+					System.out.println("OHMEHHHHFHFHFHGAHHAHSWDDD");
+				} 
+				if (map1.map[trainer.getTrainerLocation().x][trainer.getTrainerLocation().y].hasItem()) {
+					System.out.println(trainer.getTrainerLocation().x);
+					System.out.println(trainer.getTrainerLocation().y);
+					System.out.println();
+					trainer.acquireItem(
+							map1.map[trainer.getTrainerLocation().x][trainer.getTrainerLocation().y].getItem());
+					System.out.println(trainer.getTrainerLocation().x);
+					System.out.println(trainer.getTrainerLocation().y);
+				} 
+			}
+
+			else if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_B) { // enter key will toggle the menu
+				System.out.println("OHMEHHHHFHFHFHGAHHAHSWDDddsdD");
+				((CardLayout) gameCardPanel.getLayout()).show(gameCardPanel, "g");
+				gameCardPanel.remove(1); // removes the previous menu card
+				isPaused = false;
+			}
+
+
 			repaint();
 
 		}
@@ -209,7 +230,7 @@ public class PokemonGame extends JPanel implements Serializable {
 
 		public PopUpActionListener(String s) {
 			this.buttonPressed = s;
-			
+
 		}
 
 		@Override
@@ -219,11 +240,11 @@ public class PokemonGame extends JPanel implements Serializable {
 			menuFrame.setLocation(0, 0);
 			menuFrame.setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
 			menuFrame.setBackground(new Color(41, 255, 173));
-			
+
 			JLabel jta = new JLabel("");
 			jta.setSize(WINDOW_SIZE, WINDOW_SIZE);
 			jta.setFont(new Font("Courier", Font.BOLD, 30));
-			
+
 			// if/else if statement for which choice
 			if (buttonPressed.equals("Pokedex")) { // all of your pokemons
 				jta.setText(trainer.getMyBag().toStringPokedex());
@@ -244,7 +265,6 @@ public class PokemonGame extends JPanel implements Serializable {
 			gameCardPanel.add(menuFrame, "m");
 			((CardLayout) gameCardPanel.getLayout()).show(gameCardPanel, "m");
 
-			
 		}
 	}
 
@@ -273,10 +293,10 @@ public class PokemonGame extends JPanel implements Serializable {
 		return starter;
 	}
 
-
-	private void toggleMenu() { // should pressing b need to cancel the menu? cancel option already provided.
+	private void toggleMenu() { // should pressing b need to cancel the menu?
+		// cancel option already provided.
 		pauseMenu.show(this, WINDOW_SIZE - 109, 0);
-		
+
 	}
 
 }
