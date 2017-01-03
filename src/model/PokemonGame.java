@@ -1,6 +1,8 @@
 package model;
 
+import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -27,14 +29,20 @@ import pokemons.Squirtle;
 public class PokemonGame extends JPanel implements Serializable {
 
 	public static void main(String[] args) {
-		PokemonGame gameWindow = new PokemonGame();
+		PokemonGame game = new PokemonGame();
 		JFrame window = new JFrame();
+		gameCardPanel = new JPanel(new CardLayout());
 		window.setLocation(420, 369);
 		window.setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
 		window.setDefaultCloseOperation(window.EXIT_ON_CLOSE);
-		window.add(gameWindow);
+		window.add(gameCardPanel);
+		gameCardPanel.add(game, "g");
+		((CardLayout) gameCardPanel.getLayout()).show(gameCardPanel, "g");
+		gameCardPanel.addKeyListener(game.new KeyboardListener());
+		gameCardPanel.setFocusable(true);
 		window.pack();
 		window.setVisible(true);
+		
 	}
 
 	private final static int WINDOW_SIZE = 384;
@@ -42,9 +50,9 @@ public class PokemonGame extends JPanel implements Serializable {
 	private Trainer trainer;
 	private boolean isPaused;
 	private MapOne map1;
-	private JPanel gameWindow;
 	private JPopupMenu pauseMenu;
-
+	private JPanel menuFrame;
+	private static JPanel gameCardPanel; //doesn't need to be serialized. 
 	public PokemonGame() {
 
 		isPaused = false;
@@ -55,17 +63,14 @@ public class PokemonGame extends JPanel implements Serializable {
 		// initialize game panel and pause menu within frame, init frame
 		pauseMenu = new JPopupMenu();
 		initializePauseMenu();
-		gameWindow = new JPanel(null);
-		gameWindow.setSize(WINDOW_SIZE, WINDOW_SIZE);
-		gameWindow.setLocation(0, 0);
 		this.setSize(WINDOW_SIZE, WINDOW_SIZE);
 		this.setLocation(0, 0);
-		this.add(gameWindow);
+//		this.addKeyListener(new KeyboardListener());
+//		this.setFocusable(true);
 		this.add(pauseMenu);
-		this.addKeyListener(new KeyboardListener());
-		this.setFocusable(true);
 		map1 = new MapOne();
 		repaint();
+		
 	}
 
 	private void initializePauseMenu() {
@@ -75,6 +80,7 @@ public class PokemonGame extends JPanel implements Serializable {
 		pauseMenu.add(new JMenuItem(new PopUpActionListener("Trainer Card")));
 		pauseMenu.add(new JMenuItem(new PopUpActionListener("Save")));
 		pauseMenu.add(new JMenuItem(new PopUpActionListener("Option")));
+		pauseMenu.add(new JMenuItem(new PopUpActionListener("Cancel")));
 		MenuElement[] pMenuItems = pauseMenu.getSubElements();
 		((JMenuItem) pMenuItems[0]).setText("Pokedex");
 		((JMenuItem) pMenuItems[1]).setText("Pokemon");
@@ -82,6 +88,7 @@ public class PokemonGame extends JPanel implements Serializable {
 		((JMenuItem) pMenuItems[3]).setText("Trainer Card");
 		((JMenuItem) pMenuItems[4]).setText("Save");
 		((JMenuItem) pMenuItems[5]).setText("Option");
+		((JMenuItem) pMenuItems[6]).setText("Cancel");
 	}
 
 	// CURRENTLY DRAWS ONE MORE COL AND ~2 MORE ROWS
@@ -101,12 +108,19 @@ public class PokemonGame extends JPanel implements Serializable {
 		}
 		g2.drawImage(this.trainer.getImage(), trainer.getTrainerLocation().y * TILE_SIZE,
 				trainer.getTrainerLocation().x * TILE_SIZE, null);
+
 		// add trainer image here:
-		System.out.println(map1.toString());
+		// System.out.println(map1.toString());
 	}
 
 	public Trainer getTrainer() {
 		return this.trainer;
+	}
+
+	private void launchBattleScene() {
+		Battle battle = new Battle();
+		this.add(battle);
+
 	}
 
 	/*
@@ -127,40 +141,50 @@ public class PokemonGame extends JPanel implements Serializable {
 		public void keyPressed(KeyEvent e) {
 			int key = e.getKeyCode();
 			// System.out.println(key);
-			Point oldPoint = trainer.getTrainerLocation();
-			map1.map[oldPoint.x][oldPoint.y].setHasTrainer(false);
-			int dx = oldPoint.x;
-			int dy = oldPoint.y;
-
-			if (key == 38) { // up
-				dx = -1;
-				dy = 0;
-			} else if (key == 40) { // down
-				dx = 1;
-				dy = 0;
-			} else if (key == 37) { // left
-				dy = -1;
-				dx = 0;
-			} else if (key == 39) { // right
-				dy = 1;
-				dx = 0;
-			}
-
-			if (key == 10) { // enter key will toggle the menu
-				toggleMenu();
-			}
-
-			// TODO: ADD MORE ELSE IF STATEMENTS FOR ENTER KEYS, A, B, ETC
-
-			if (inBounds(oldPoint.x + dx, oldPoint.y + dy) && map1.map[oldPoint.x + dx][oldPoint.y + dy].canMove()) {
-				trainer.setTrainerLocation(new Point(oldPoint.x + dx, oldPoint.y + dy));
-				map1.map[oldPoint.x + dx][oldPoint.y + dy].setHasTrainer(true);
-				map1.map[oldPoint.x + dx][oldPoint.y + dy].playerIsOnTile(trainer);
+			if (!isPaused) {
+				Point oldPoint = trainer.getTrainerLocation();
+				map1.map[oldPoint.x][oldPoint.y].setHasTrainer(false);
+				int dx = oldPoint.x;
+				int dy = oldPoint.y;
+	
+				if (key == 38) { // up
+					dx = -1;
+					dy = 0;
+				} else if (key == 40) { // down
+					dx = 1;
+					dy = 0;
+				} else if (key == 37) { // left
+					dy = -1;
+					dx = 0;
+				} else if (key == 39) { // right
+					dy = 1;
+					dx = 0;
+				}
+	
+				if (key == 10) { // enter key will toggle the menu
+					toggleMenu();
+				}
+	
+				// TODO: ADD MORE ELSE IF STATEMENTS FOR ENTER KEYS, A, B, ETC
+	
+				if (inBounds(oldPoint.x + dx, oldPoint.y + dy) && map1.map[oldPoint.x + dx][oldPoint.y + dy].canMove()) {
+					trainer.setTrainerLocation(new Point(oldPoint.x + dx, oldPoint.y + dy));
+					map1.map[oldPoint.x + dx][oldPoint.y + dy].setHasTrainer(true);
+					map1.map[oldPoint.x + dx][oldPoint.y + dy].playerIsOnTile(trainer);
+					if (trainer.getBattleState()) {
+						launchBattleScene();
+					}
+				} else {
+					trainer.setTrainerLocation(oldPoint);
+					map1.map[oldPoint.x][oldPoint.y].setHasTrainer(true);
+				}
 			} else {
-				trainer.setTrainerLocation(oldPoint);
-				map1.map[oldPoint.x][oldPoint.y].setHasTrainer(true);
+				if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_B) { // enter key will toggle the menu
+					((CardLayout) gameCardPanel.getLayout()).show(gameCardPanel, "g");
+					gameCardPanel.remove(1); // removes the previous menu card
+					isPaused = false;
+				}
 			}
-
 			repaint();
 
 		}
@@ -182,32 +206,28 @@ public class PokemonGame extends JPanel implements Serializable {
 	private class PopUpActionListener extends AbstractAction {
 
 		private String buttonPressed;
-		private JFrame newFrame;
 
 		public PopUpActionListener(String s) {
 			this.buttonPressed = s;
-			newFrame = new JFrame();
+			
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
-			newFrame.setLocation(450, 389);
-			newFrame.setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
-			newFrame.pack();
-			JPanel newPanel = new JPanel(null);
-			newPanel.setLocation(0, 0);
-			newPanel.setSize(WINDOW_SIZE-69, WINDOW_SIZE-69);
-			newPanel.setBackground(Color.white);
-
+			isPaused = true;
+			menuFrame = new JPanel();
+			menuFrame.setLocation(0, 0);
+			menuFrame.setPreferredSize(new Dimension(WINDOW_SIZE, WINDOW_SIZE));
+			menuFrame.setBackground(new Color(41, 255, 173));
+			
 			JLabel jta = new JLabel("");
 			jta.setSize(WINDOW_SIZE, WINDOW_SIZE);
 			jta.setFont(new Font("Courier", Font.BOLD, 30));
-
+			
 			// if/else if statement for which choice
-			if (buttonPressed.equals("Pokedex")) { //all of your pokemons
+			if (buttonPressed.equals("Pokedex")) { // all of your pokemons
 				jta.setText(trainer.getMyBag().toStringPokedex());
-			} else if (buttonPressed.equals("Pokemon")) { //your six pokemons
+			} else if (buttonPressed.equals("Pokemon")) { // your six pokemons
 				jta.setText(trainer.getMyBag().toStringParty());
 			} else if (buttonPressed.equals("Bag")) {
 				jta.setText(trainer.getMyBag().toStringBag());
@@ -217,11 +237,14 @@ public class PokemonGame extends JPanel implements Serializable {
 
 			} else if (buttonPressed.equals("Option")) {
 
+			} else {
+				return;
 			}
+			menuFrame.add(jta);
+			gameCardPanel.add(menuFrame, "m");
+			((CardLayout) gameCardPanel.getLayout()).show(gameCardPanel, "m");
 
-			newPanel.add(jta);
-			newFrame.add(newPanel);
-			newFrame.setVisible(true);
+			
 		}
 	}
 
@@ -250,14 +273,10 @@ public class PokemonGame extends JPanel implements Serializable {
 		return starter;
 	}
 
-	private void toggleMenu() {
-		if (!isPaused) {
-			// isPaused = !isPaused;
-			pauseMenu.show(this, WINDOW_SIZE - 109, 0);
-		} else {
-			// isPaused = !isPaused;
-		}
-		// will actually pause once user selects a pause menu item
+
+	private void toggleMenu() { // should pressing b need to cancel the menu? cancel option already provided.
+		pauseMenu.show(this, WINDOW_SIZE - 109, 0);
+		
 	}
 
 }

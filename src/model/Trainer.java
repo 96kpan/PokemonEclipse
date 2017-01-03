@@ -101,5 +101,8 @@ public class Trainer {
 	public Image getImage() {
 		return trainer;
 	}
-
+	
+	public boolean getBattleState() {
+		return isBattling;
+	}
 }
