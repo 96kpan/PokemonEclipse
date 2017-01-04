@@ -143,68 +143,61 @@ public class PokemonGame extends JPanel implements Serializable {
 			int key = e.getKeyCode();
 			System.out.println(key);
 			if (!isPaused) {
-				Point oldPoint = trainer.getTrainerLocation();
-				map1.map[oldPoint.x][oldPoint.y].setHasTrainer(false);
-				int dx = oldPoint.x;
-				int dy = oldPoint.y;
-
-				if (key == 38) { // up
-					dx = -1;
-					dy = 0;
-				} else if (key == 40) { // down
-					dx = 1;
-					dy = 0;
-				} else if (key == 37) { // left
-					dy = -1;
-					dx = 0;
-				} else if (key == 39) { // right
-					dy = 1;
-					dx = 0;
-				}
-
-				if (key == 10) { // enter key will toggle the menu
+				if (key == KeyEvent.VK_ENTER) { // enter key will toggle the menu
 					toggleMenu();
-				}
+				} else if (key ==  KeyEvent.VK_J) { // A button is 'J'
+					// picks up item if neccessary, needs to be facing item
 
-				// TODO: ADD MORE ELSE IF STATEMENTS FOR ENTER KEYS, A, B, ETC
-
-				if (inBounds(oldPoint.x + dx, oldPoint.y + dy)
-						&& map1.map[oldPoint.x + dx][oldPoint.y + dy].canMove()) {
-					trainer.setTrainerLocation(new Point(oldPoint.x + dx, oldPoint.y + dy));
-					map1.map[oldPoint.x + dx][oldPoint.y + dy].setHasTrainer(true);
-					map1.map[oldPoint.x + dx][oldPoint.y + dy].playerIsOnTile(trainer);
-					if (trainer.getBattleState()) {
-						launchBattleScene();
+					if (map1.map[trainer.getTrainerLocation().x][trainer.getTrainerLocation().y].hasItem()) {
+					
+						trainer.acquireItem(
+								map1.map[trainer.getTrainerLocation().x][trainer.getTrainerLocation().y].getItem());
+						
 					}
-				} else {
-					trainer.setTrainerLocation(oldPoint);
-					map1.map[oldPoint.x][oldPoint.y].setHasTrainer(true);
+				} else if (key >= 37 && key <= 40) {
+					
+					Point oldPoint = trainer.getTrainerLocation();
+					map1.map[oldPoint.x][oldPoint.y].setHasTrainer(false);
+					int dx = 0;
+					int dy = 0;
+
+					if (key == 38) { // up
+						dx = -1;
+						dy = 0;
+					} else if (key == 40) { // down
+						dx = 1;
+						dy = 0;
+					} else if (key == 37) { // left
+						dy = -1;
+						dx = 0;
+					} else if (key == 39) { // right
+						dy = 1;
+						dx = 0;
+					}
+					
+					if (inBounds(oldPoint.x + dx, oldPoint.y + dy)
+							&& map1.map[oldPoint.x + dx][oldPoint.y + dy].canMove()) {
+						trainer.setTrainerLocation(new Point(oldPoint.x + dx, oldPoint.y + dy));
+						map1.map[oldPoint.x + dx][oldPoint.y + dy].setHasTrainer(true);
+						map1.map[oldPoint.x + dx][oldPoint.y + dy].playerIsOnTile(trainer);
+						if (trainer.getBattleState()) {
+							launchBattleScene();
+						}
+					} else {
+						trainer.setTrainerLocation(oldPoint);
+						map1.map[oldPoint.x][oldPoint.y].setHasTrainer(true);
+					}
 				}
+
 			}
 
-			else if (key == 65) { //A button
-				// picks up item if neccessary
-				if (map1.map[trainer.getTrainerLocation().y][trainer.getTrainerLocation().x].hasItem()) {
-					System.out.println("OHMEHHHHFHFHFHGAHHAHSWDDD");
-				} 
-				if (map1.map[trainer.getTrainerLocation().x][trainer.getTrainerLocation().y].hasItem()) {
-					System.out.println(trainer.getTrainerLocation().x);
-					System.out.println(trainer.getTrainerLocation().y);
-					System.out.println();
-					trainer.acquireItem(
-							map1.map[trainer.getTrainerLocation().x][trainer.getTrainerLocation().y].getItem());
-					System.out.println(trainer.getTrainerLocation().x);
-					System.out.println(trainer.getTrainerLocation().y);
-				} 
-			}
-
-			else if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_B) { // enter key will toggle the menu
-				System.out.println("OHMEHHHHFHFHFHGAHHAHSWDDddsdD");
+			else if (key == KeyEvent.VK_ENTER) { // enter key will toggle the
+													// menu
 				((CardLayout) gameCardPanel.getLayout()).show(gameCardPanel, "g");
-				gameCardPanel.remove(1); // removes the previous menu card
+				if (gameCardPanel.getComponentCount() >= 2)
+					gameCardPanel.remove(1); // removes the previous menu card
 				isPaused = false;
 			}
-
 
 			repaint();
 
@@ -253,12 +246,13 @@ public class PokemonGame extends JPanel implements Serializable {
 			} else if (buttonPressed.equals("Bag")) {
 				jta.setText(trainer.getMyBag().toStringBag());
 			} else if (buttonPressed.equals("Trainer Card")) {
-
+				
 			} else if (buttonPressed.equals("Save")) {
 
 			} else if (buttonPressed.equals("Option")) {
 
 			} else {
+				isPaused = false;
 				return;
 			}
 			menuFrame.add(jta);
