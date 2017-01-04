@@ -17,6 +17,7 @@ public class Bulbasaur extends Pokemon implements Serializable {
 	
 	public Bulbasaur(){
 		this(thisLevel, thisHealth, "Bulbasaur", "Grass", false, thisRunProbs, insertImage());
+		
 	}
 
 	public Bulbasaur(int level, int totalHealth, String pokemonName, String pokemonType, boolean capturedOrNot,
@@ -35,6 +36,12 @@ public class Bulbasaur extends Pokemon implements Serializable {
 			System.out.println("Can't find image");
 		}
 		return thisPic.getSubimage(0, 1*32 , 32, 32);
+	}
+
+	@Override
+	public int getID() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

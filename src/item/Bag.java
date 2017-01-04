@@ -3,6 +3,7 @@ package item;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import model.Pokedex;
 import pokemons.Pokemon;
 
 
@@ -10,12 +11,12 @@ public class Bag {
 	
 	HashMap <String, Integer> myBag;
 	ArrayList<Pokemon> party;
-	ArrayList<Pokemon> pokedex;
+	Pokedex pokedex;
 	
 	public Bag(){
 		myBag = new HashMap();
 		party = new ArrayList<Pokemon>();
-		pokedex = new ArrayList<Pokemon>();
+		pokedex = new Pokedex();
 		//init categories
 //		1. Pokeballs
 //		2. Cookies -> restore the pokemon's HP level by 15 HPs
@@ -39,7 +40,7 @@ public class Bag {
 	
 	public void addPokemon(Pokemon p){
 	
-		if(pokedex.size() <= 6){
+		if(party.size() < 6){
 			party.add(p); //adds to both if user hasn't reached 6 pokemons
 		} 
 		pokedex.add(p); //but the minute a user hits 6 pokemons, then we only add to the pokedex
@@ -50,7 +51,7 @@ public class Bag {
 		return this.myBag;
 	}
 	
-	public ArrayList getMyPokeDex(){
+	public ArrayList getMyParty(){
 		return this.party;
 	}
 	
@@ -76,15 +77,8 @@ public class Bag {
 		return str.toString();
 	}
 	
-	public String toStringPokedex(){
-		StringBuilder str = new StringBuilder();
-		str.append("<html>");
-		for(int i = 0; i < this.pokedex.size(); i++){
-			str.append(pokedex.get(i) + " </br>");
-		}
-		str.append("</html>");
-		
-		return str.toString();
+	public String[] toStringPokedex(){
+		return pokedex.getEntries();
 	}
 
 }

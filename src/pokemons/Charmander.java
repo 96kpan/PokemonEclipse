@@ -38,4 +38,10 @@ public class Charmander extends Pokemon implements Serializable {
 		}
 		return thisPic.getSubimage(0, 2*32 , 32, 32);
 	}
+
+	@Override
+	public int getID() {
+		// TODO Auto-generated method stub
+		return 3;
+	}
 }

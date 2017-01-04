@@ -22,7 +22,7 @@ public class Trainer {
 	private Bag myBag;
 	private static Trainer instance;
 	private String myTrainerName;
-	private static Point myTrainerLocation;
+	private Point myTrainerLocation;
 	private Direction myTrainerDirection;
 	private transient BufferedImage trainer;
 	private boolean isBattling;
@@ -35,6 +35,7 @@ public class Trainer {
 		myTrainerName = "Pickles";
 		
 		try {
+			//trainer = ImageIO.read(new File("images/trainer_spriteSheet.png"));
 			trainer = ImageIO.read(new File("images/trainer.png"));
 			
 			
@@ -101,8 +102,13 @@ public class Trainer {
 	public Direction getTrainerDirection() {
 		return this.myTrainerDirection;
 	}
+	public void setTrainerDirection(Direction d) {
+		this.myTrainerDirection = d;
+	}
 
 	public Image getImage() {
+		//if (myTrainerDirection.equals(Direction.SOUTH))
+			//return trainer.getSubimage(12, 9, 24, 30);
 		return trainer;
 	}
 	
