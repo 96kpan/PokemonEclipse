@@ -111,4 +111,6 @@ public abstract class Pokemon implements Serializable {
 		return this.pokemonPicture;
 	}
 
+	public abstract int getID();
+
 }

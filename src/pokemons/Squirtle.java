@@ -36,4 +36,10 @@ public class Squirtle extends Pokemon implements Serializable{
 		}
 		return thisPic.getSubimage(0, 10*32 , 32, 32);
 	}
+
+	@Override
+	public int getID() {
+		// TODO Auto-generated method stub
+		return 6;
+	}
 }

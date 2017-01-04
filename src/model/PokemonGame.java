@@ -53,9 +53,10 @@ public class PokemonGame extends JPanel implements Serializable {
 	private JPopupMenu pauseMenu;
 	private JPanel menuFrame;
 	private static JPanel gameCardPanel; // doesn't need to be serialized.
+	private Pokedex dex;
 
 	public PokemonGame() {
-
+		dex = new Pokedex();
 		isPaused = false;
 		// initialize trainer name and starter poke
 		trainer = new Trainer();
@@ -111,7 +112,6 @@ public class PokemonGame extends JPanel implements Serializable {
 				trainer.getTrainerLocation().x * TILE_SIZE, null);
 
 		// add trainer image here:
-		// System.out.println(map1.toString());
 	}
 
 	public Trainer getTrainer() {
@@ -141,7 +141,6 @@ public class PokemonGame extends JPanel implements Serializable {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			int key = e.getKeyCode();
-			System.out.println(key);
 			if (!isPaused) {
 				if (key == KeyEvent.VK_ENTER) { // enter key will toggle the menu
 					toggleMenu();
@@ -164,15 +163,19 @@ public class PokemonGame extends JPanel implements Serializable {
 					if (key == 38) { // up
 						dx = -1;
 						dy = 0;
+						trainer.setTrainerDirection(Direction.NORTH);
 					} else if (key == 40) { // down
 						dx = 1;
 						dy = 0;
+						trainer.setTrainerDirection(Direction.SOUTH);
 					} else if (key == 37) { // left
 						dy = -1;
 						dx = 0;
+						trainer.setTrainerDirection(Direction.WEST);
 					} else if (key == 39) { // right
 						dy = 1;
 						dx = 0;
+						trainer.setTrainerDirection(Direction.EAST);
 					}
 					
 					if (inBounds(oldPoint.x + dx, oldPoint.y + dy)
@@ -240,7 +243,7 @@ public class PokemonGame extends JPanel implements Serializable {
 
 			// if/else if statement for which choice
 			if (buttonPressed.equals("Pokedex")) { // all of your pokemons
-				jta.setText(trainer.getMyBag().toStringPokedex());
+				
 			} else if (buttonPressed.equals("Pokemon")) { // your six pokemons
 				jta.setText(trainer.getMyBag().toStringParty());
 			} else if (buttonPressed.equals("Bag")) {

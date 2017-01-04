@@ -33,7 +33,6 @@ public abstract class Map implements Serializable {
 	private transient BufferedImage grass;
 	// private transient BufferedImage gym;
 	private transient BufferedImage smallTree;
-	private transient BufferedImage trainerImage;
 	private transient BufferedImage pokeballImage;
 	private transient BufferedImage cookieImage;
 	private transient BufferedImage superCookieImage;
@@ -48,7 +47,6 @@ public abstract class Map implements Serializable {
 			grass = ImageIO.read(new File("images/grass.png"));
 			// gym = ImageIO.read(new File("images/gym.png"));
 			smallTree = ImageIO.read(new File("images/smalltree.png"));
-			trainerImage = ImageIO.read(new File("images/trainer.png"));
 			pokeballImage = ImageIO.read(new File("images/pokeball.png"));
 			cookieImage = ImageIO.read(new File("images/cookies.png"));
 			superCookieImage = ImageIO.read(new File("images/supercookies.png"));
